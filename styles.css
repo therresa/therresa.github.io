@@ -197,7 +197,7 @@ body {
     background-color: #c4b8e5;
     color: #000000;
     margin: 20px auto;
-    width: 800px;
+    width: 1200px;
     padding: 3px;
     box-sizing: border-box;
 
@@ -387,6 +387,15 @@ body {
     line-height: 1.5;
     margin-top: 0;
     margin-bottom: 12px;
+}
+
+.plot-image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 12px 0 16px 0;
+    border: 1px solid #3f3461;
+    box-shadow: 2px 2px 0px #241b3a;
 }
 
 .code-editor {
