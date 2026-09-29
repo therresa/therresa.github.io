@@ -1,23 +1,184 @@
+/* ==========================================================================
+   GLOBAL RESET & BODY
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+}
+
 body {
     background-color: #3f3461;
     color: white;
-    font-family: 'Consolas', sans-serif;
+    font-family: 'Consolas', monospace;
     text-align: left;
     font-size: 16px;
     margin: 0;
     padding: 0;
 }
 
-/* Outer Window Frame */
+/* ==========================================================================
+   INDEX.HTML — DESKTOP ENVIRONMENT & TASKBAR
+   ========================================================================== */
+.desktop-body {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.desktop {
+    padding: 30px;
+    height: calc(100vh - 38px);
+    position: relative;
+}
+
+.desktop-greeting h1 {
+    font-size: 36px;
+    margin: 0 0 20px 0;
+    color: #ffffff;
+    text-shadow: 2px 2px 0px #241b3a;
+}
+
+/* Desktop Icons */
+.desktop-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.desktop-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #ffffff;
+    width: 80px;
+    padding: 6px;
+    border: 1px transparent dashed;
+}
+
+.desktop-icon:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: #ffffff;
+}
+
+/* Folder Icon Graphic */
+.folder-icon {
+    width: 40px;
+    height: 30px;
+    position: relative;
+    margin-bottom: 6px;
+}
+
+.folder-tab {
+    width: 16px;
+    height: 6px;
+    background-color: #f1fa8c;
+    border: 1px solid #000000;
+    border-bottom: none;
+    position: absolute;
+    top: 0;
+    left: 2px;
+}
+
+.folder-front {
+    width: 40px;
+    height: 25px;
+    background-color: #f1fa8c;
+    border: 1px solid #000000;
+    position: absolute;
+    bottom: 0;
+    box-shadow: 2px 2px 0px #241b3a;
+}
+
+.icon-label {
+    font-size: 13px;
+    text-align: center;
+    word-break: break-word;
+    text-shadow: 1px 1px 0px #000000;
+}
+
+/* Taskbar */
+.taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 38px;
+    background-color: #c4b8e5;
+    border-top: 2px solid #ffffff;
+    display: flex;
+    align-items: center;
+    padding: 3px 6px;
+    gap: 6px;
+    z-index: 9999;
+    color: #000000;
+}
+
+.start-btn {
+    background-color: #c4b8e5;
+    color: #000000;
+    font-family: 'Consolas', monospace;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 3px 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-top: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    border-right: 2px solid #3f3461;
+    border-bottom: 2px solid #3f3461;
+    cursor: pointer;
+}
+
+.start-btn:active {
+    border-top: 2px solid #3f3461;
+    border-left: 2px solid #3f3461;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+}
+
+.taskbar-divider {
+    width: 2px;
+    height: 22px;
+    border-left: 1px solid #3f3461;
+    border-right: 1px solid #ffffff;
+}
+
+.taskbar-item {
+    background-color: #c4b8e5;
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: bold;
+    border-top: 2px solid #3f3461;
+    border-left: 2px solid #3f3461;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+}
+
+.system-tray {
+    margin-left: auto;
+    background-color: #c4b8e5;
+    border-top: 2px solid #3f3461;
+    border-left: 2px solid #3f3461;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* ==========================================================================
+   SYDE572.HTML — FILE EXPLORER WINDOW
+   ========================================================================== */
 .main-content {
-    background-color: #c4b8e5; /* Lightened purple frame */
+    background-color: #c4b8e5;
     color: #000000;
     margin: 20px auto;
     width: 800px;
     padding: 3px;
     box-sizing: border-box;
 
-    /* Beveled Windows Border */
     border-top: 3px solid #ffffff;
     border-left: 3px solid #ffffff;
     border-right: 3px solid #6b5b95;
@@ -25,7 +186,6 @@ body {
     box-shadow: 2px 2px 0px #241b3a;
 }
 
-/* Window Titlebar Header */
 .window-titlebar {
     background: linear-gradient(90deg, #3f3461, #6b5b95);
     color: #ffffff;
@@ -37,7 +197,6 @@ body {
     font-size: 14px;
 }
 
-/* Control Buttons */
 .window-controls {
     display: flex;
     gap: 4px;
@@ -74,7 +233,93 @@ body {
     color: #ffffff;
 }
 
-/* Main Content Body Area */
+/* Explorer Address Bar */
+.explorer-addressbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    background-color: #c4b8e5;
+    border-bottom: 1px solid #6b5b95;
+    font-size: 13px;
+}
+
+.address-box {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 2px 6px;
+    flex-grow: 1;
+    border-top: 2px solid #3f3461;
+    border-left: 2px solid #3f3461;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+    font-family: 'Consolas', monospace;
+}
+
+.explorer-body {
+    padding: 20px 25px;
+    background-color: #c4b8e5;
+}
+
+.explorer-body h2 {
+    font-size: 20px;
+    color: #3f3461;
+    margin-top: 0;
+}
+
+.instruction {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.file-grid {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.file-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: underline;
+    color: #0000ff;
+    padding: 8px;
+    border: 1px transparent dotted;
+}
+
+.file-item:hover {
+    background-color: #3f3461;
+    color: #ffffff;
+}
+
+/* Text File Icon Graphic */
+.txt-icon {
+    width: 32px;
+    height: 40px;
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    margin-bottom: 6px;
+    padding: 6px 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: 2px 2px 0px #3f3461;
+}
+
+.icon-line {
+    height: 2px;
+    background-color: #6b5b95;
+    width: 100%;
+}
+
+.file-name {
+    font-size: 13px;
+}
+
+/* ==========================================================================
+   ASSN1.HTML — RETRO WINDOW BODY, NOTEPAD EDITOR & PDF IFRAME
+   ========================================================================== */
 .window-body {
     padding: 25px 35px;
     box-sizing: border-box;
@@ -92,7 +337,6 @@ body {
     margin-top: 25px;
 }
 
-/* Code Editor Window */
 .code-editor {
     margin-top: 15px;
     background-color: #c4b8e5;
@@ -112,9 +356,8 @@ body {
     font-family: 'Consolas', monospace;
 }
 
-/* Code Editor Area */
 .editor-content {
-    background-color: #282a36; /* Dracula dark background */
+    background-color: #282a36; /* Official Dracula background */
     border-top: 2px solid #3f3461;
     border-left: 2px solid #3f3461;
     border-right: 2px solid #ffffff;
@@ -134,19 +377,13 @@ body {
     word-spacing: normal;
 }
 
-/* 
- * ZERO SPECIFICITY FIX:
- * :where() forces these rules to have 0 specificity. 
- * This sets base text to off-white without overriding dracula.min.css token colors!
- */
-:where(.editor-content) code {
+.editor-content code {
     font-family: inherit;
     background: transparent;
     padding: 0;
-    color: #f8f8f2;
 }
 
-/* Custom Themed Scrollbars */
+/* Scrollbars */
 .editor-content::-webkit-scrollbar {
     width: 14px;
     height: 14px;
@@ -173,4 +410,56 @@ body {
     border-right: 2px solid #ffffff;
     border-bottom: 2px solid #ffffff;
     box-sizing: border-box;
+}
+
+/* ==========================================================================
+   DRACULA SYNTAX TOKEN OVERRIDES
+   ========================================================================== */
+.editor-content code.hljs {
+    color: #f8f8f2 !important;
+}
+
+.editor-content .hljs-keyword,
+.editor-content .hljs-selector-tag,
+.editor-content .hljs-literal,
+.editor-content .hljs-section,
+.editor-content .hljs-link {
+    color: #ff79c6 !important;
+}
+
+.editor-content .hljs-function,
+.editor-content .hljs-title,
+.editor-content .hljs-title.function_ {
+    color: #50fa7b !important;
+}
+
+.editor-content .hljs-string,
+.editor-content .hljs-meta,
+.editor-content .hljs-name,
+.editor-content .hljs-type,
+.editor-content .hljs-symbol,
+.editor-content .hljs-bullet,
+.editor-content .hljs-addition,
+.editor-content .hljs-variable,
+.editor-content .hljs-template-tag,
+.editor-content .hljs-template-variable {
+    color: #f1fa8c !important;
+}
+
+.editor-content .hljs-comment,
+.editor-content .hljs-quote,
+.editor-content .hljs-deletion,
+.editor-content .hljs-meta .hljs-keyword {
+    color: #6272a4 !important;
+}
+
+.editor-content .hljs-number,
+.editor-content .hljs-built_in,
+.editor-content .hljs-builtin-name {
+    color: #bd93f9 !important;
+}
+
+.editor-content .hljs-attr,
+.editor-content .hljs-attribute {
+    color: #50fa7b !important;
 }
