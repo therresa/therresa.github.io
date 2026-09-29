@@ -2,10 +2,44 @@
 <html>
 <head>
   <title>SYDE572 Course Portfolio</title>
+  <!-- Fixed CSS path to point directly to root styles.css -->
   <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
-  <h1>Welcome to My SYDE572 Portfolio!</h1>
-  <a href="./assignments/assn1.html">Assignment 1</a>
+  <div class="main-content">
+    <!-- Window Titlebar -->
+    <div class="window-titlebar">
+      <span class="title-text">C:\SYDE572\Assignments</span>
+      <div class="window-controls">
+        <a href="../index.html" class="win-btn" title="Back to Home">_</a>
+        <a href="../index.html" class="win-btn close-btn" title="Close">X</a>
+      </div>
+    </div>
+
+    <!-- Explorer Address Bar -->
+    <div class="explorer-addressbar">
+      <span class="address-label">Address:</span>
+      <div class="address-box">C:\SYDE572\assignments</div>
+    </div>
+
+    <!-- File Explorer Content Area -->
+    <div class="explorer-body">
+      <h2>Welcome to My SYDE572 Course Assignments!</h2>
+      <p class="instruction">Double-click or click a file to open:</p>
+
+      <!-- Grid/List of Files -->
+      <div class="file-grid">
+        <a href="./assignments/assn1.html" class="file-item">
+          <!-- Text File Icon -->
+          <div class="txt-icon">
+            <span class="icon-line"></span>
+            <span class="icon-line"></span>
+            <span class="icon-line"></span>
+          </div>
+          <span class="file-name">Assignment_1.txt</span>
+        </a>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

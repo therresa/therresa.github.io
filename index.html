@@ -1,16 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Theresa Nguyen - My Portfolio</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-  </style>
+  <title>Home - Course Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <h1>Hi, I'm Theresa!</h1>
-  <a href="./SYDE572/syde572.html">SYDE 572 Course Portfolio</a>
+<body class="desktop-body">
+
+  <!-- Desktop Environment -->
+  <div class="desktop">
+    
+    <!-- Background Desktop Text -->
+    <div class="desktop-greeting">
+      <h1>Hi, I'm Theresa!</h1>
+    </div>
+
+    <!-- Desktop Icons -->
+    <div class="desktop-icons">
+      <!-- SYDE572 Portfolio Folder Icon -->
+      <a href="./SYDE572/syde572.html" class="desktop-icon">
+        <div class="folder-icon">
+          <div class="folder-tab"></div>
+          <div class="folder-front"></div>
+        </div>
+        <span class="icon-label">SYDE572</span>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Windows Bottom Taskbar -->
+  <div class="taskbar">
+    <button class="start-btn">
+      <span class="start-flag">❖</span> Start
+    </button>
+    <div class="taskbar-divider"></div>
+    <div class="taskbar-item active">
+      <span>Desktop</span>
+    </div>
+    <div class="system-tray">
+      <!-- Live Clock Container -->
+      <span id="tray-time">12:00 PM</span>
+    </div>
+  </div>
+
+  <!-- JavaScript for Live Clock -->
+  <script>
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      
+      hours = hours % 12;
+      hours = hours ? hours : 12; // Convert 0 to 12
+      
+      const timeString = `${hours}:${minutes} ${ampm}`;
+      document.getElementById('tray-time').textContent = timeString;
+    }
+
+    // Run clock immediately and update every second
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+
 </body>
 </html>

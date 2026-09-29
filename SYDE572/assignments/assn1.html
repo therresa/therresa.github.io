@@ -2,18 +2,159 @@
 <html>
 <head>
   <title>Assignment 1</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../../styles.css">
+
+  <!-- Corrected Dracula Theme CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.8.0/styles/dracula.css">
+
+  <!-- Highlight.js Core Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+
+  <!-- Safe DOM Initialization -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      hljs.highlightAll();
+    });
+  </script>
 </head>
 <body>
-  <h1>SYDE572 – Assignment 1</h1>
-  <p>Below are all the handwritten solutions for this assignment. The jupyter notebooks can be found after the PDF.</p>
-</body>
-<!-- Embed the PDF file using an iframe (replace with actual path) -->
-<iframe src="Assignment 1.pdf" width="100%" height="600px" frameborder="0">
-    This browser does not support inline PDFs. Please download the PDF to view it: 
-    <a href="Assignment 1.pdf">Download PDF</a>.
-</iframe>
-<body>
-  <h2>The Code</h2>
+
+  <div class="main-content">
+    <!-- Taskbar / Window Title Bar -->
+    <div class="window-titlebar">
+      <span class="title-text">SYDE572 – Assignment 1</span>
+      <div class="window-controls">
+        <a href="../syde572.html" class="win-btn" title="Back to SYDE572">_</a>
+        <a href="../../index.html" class="win-btn close-btn" title="Home">X</a>
+      </div>
+    </div>
+
+    <div class="window-body">
+      <!-- Part 1 Analytical -->
+      <h2>Part 1: Finding the shortest distance from a point to a function</h2>
+      <h3>Analytical Method</h3>
+      <p>Attempting the analytical method (finding the derivative of the distance function, setting to 0, and solving for the critical points) resulted in fairly straightforward calculations. Calculator use was required to compute the final distance values. The main reason this was so simple to do by hand is because the distance function itself is so simple to derive. </p>
+      <p> Full handwritten calculations below. </p>
+
+      <!-- Embed PDF 1 -->
+      <iframe class="pdf-iframe" src="Assignment 1-part-1.pdf">
+          This browser does not support inline PDFs. Please download the PDF to view it: 
+          <a href="Assignment 1-part-1.pdf">Download PDF</a>.
+      </iframe>
+
+      <!-- Part 2 Numerical Methods -->
+      <h2>Numerical Methods</h2>
+      <p>Each of the numerical methods was employed for two iterations rather than engaging with the full convergence process or setting a tolerance value.</p>
+      
+      <h3>Newton-Raphson Method</h3>
+      <p>To use the Newton-Raphson method, I took the derivative and double derivative of the distance function. Then, for every given point, I plugged in the (x_i, y_i) values and applied an initial guess of x = 0. Applying the Newton-Raphson formula gave me a new guess for my second iteration, which yielded my final distance estimates for each point. It can be observed that all of the resulting distances are close to the analytical solutions. </p>
+      
+      <!-- Embed PDF 2 -->
+      <iframe class="pdf-iframe" src="Assignment 1-part-2-1.pdf">
+          This browser does not support inline PDFs. Please download the PDF to view it: 
+          <a href="Assignment 1-part-2-1.pdf">Download PDF</a>.
+      </iframe>
+
+      <h3>Bisection Method</h3>
+      <p>For the bisection method, I selected an initial interval of x_1 = -1 to x_2 = 1. After calculating the function values at the endpoints to ensure there was a sign change (meaning that it would cross the x-axis), I determined the midpoint x_3 and plugged it into the function. Depending on the sign of this new function value, I selected another interval spanning either x_2 to x_3, or x_1 to x_3. The same process was applied (verify the interval crosses the x-axis, calculate the midpoint, plug the midpoint into the function). I stopped at this second iteration for every given point. </p>
+      
+      <!-- Embed PDF 3 -->
+      <iframe class="pdf-iframe" src="Assignment 1-part-2-2.pdf">
+          This browser does not support inline PDFs. Please download the PDF to view it: 
+          <a href="Assignment 1-part-2-2.pdf">Download PDF</a>.
+      </iframe>
+
+      <h2>The Code</h2>
+      <h3>Newton-Raphson Method in Python</h3>
+      
+      <!-- Styled Code Box -->
+      <div class="code-editor">
+        <div class="editor-header">
+          <span class="editor-title">q1_newtonraphson.py - Notepad</span>
+        </div>
+        <div class="editor-content">
+          <pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Newton-Raphson method function
+def newton_raphson(f, df, d2f, iterations = 2):
+    x = 0
+    for i in range(iterations):
+        x = x - df(x) / d2f(x)
+    return x
+
+def set_up_functions(x0, y0, func_type):
+    if func_type == 'parabola':
+        y = lambda x: x**2 + 5  # Parabolic function
+
+        f = lambda x: (x-x0)**2 + ((x**2 + 5) - y0)**2  # Distance function
+        df = lambda x: 2*(x-x0) + 2*((x**2 + 5) - y0)*(2*x)  # First derivative
+        d2f = lambda x: 2 + 2*(2*x)**2 + 2*((x**2 + 5) - y0)*(2)  # Second derivative
+
+    elif func_type == 'exponential':
+        y = lambda x: np.exp(x)  # Exponential function
+
+        f = lambda x: (x-x0)**2 + (np.exp(x) - y0)**2  # Distance function
+        df = lambda x: 2*(x-x0) + 2*(np.exp(x) - y0)*np.exp(x)  # First derivative
+        d2f = lambda x: 2 + 2*(np.exp(x))**2 + 2*(np.exp(x) - y0)*np.exp(x)  # Second derivative
+
+    root = newton_raphson(f, df, d2f)  # Call Newton-Raphson method
+    return y, root
+
+def main():
+    ### EXAMPLE 1: Distance from point to a parabolic function.
+    points = [(0,0), (-4,0), (-8,0), (2,0), (6,0)]  # Point coordinates
+    function = 'parabola'
+    for x0, y0 in points:
+        y, root = set_up_functions(x0, y0, function)
+        distance = np.sqrt(root**2 + y(root)**2)
+        
+        print(f"Estimated root ({function} to point equation) after 2 iterations: {root}")
+        print(f"Estimated distance from point ({x0}, {y0}) to {function}: {distance}")
+
+    ### EXAMPLE 2: Distance from point to an exponential function.
+    function = 'exponential'  # Function type
+    for x0, y0 in points:
+        y, root = set_up_functions(x0, y0, function)
+
+        distance = np.sqrt(root**2 + y(root)**2)
+
+        print(f"Estimated root ({function} to point equation) after 2 iterations: {root}")
+        print(f"Estimated distance from point ({x0}, {y0}) to {function}: {distance}")
+
+if __name__ == "__main__":
+    main()</code></pre>
+        </div>
+      </div>
+
+      <!-- Part 2 Analytical -->
+      <h2>Part 2: Fitting points to an equation</h2>
+      <h3>Analytical Method</h3>
+      <p>This part has two objectives: fitting a line to the provided points (0,0.5), (2,3.5), (1,1.5), (3,7.5), and fitting a parabola to the same points. </p>
+      
+      <h4>Fitting to a line</h4>
+      <p>As the assignment specifies, I minimized the squared error. I established a ρ (which is simply the sum of every permutation of (y*(x) - y(x))^2, where y*(x) is the linear equation with (x_i, y_i) substituted in). With this ρ, I was able to take its partial derivatives with respect to both parameters of interest (intercept and slope, represented as C_0 and C_1 respectively). This created a system of equations that I could solve and create my line of best fit equation.</p>
+      
+      <h4>Fitting to a parabola</h4>
+      <p>The strategy for a parabola proved slightly different. Rather than setting up another MSE equation, I set up a system of 4 equations. For each of the points given, I substituted their x and y values into the parabolic equation, y = Bx^2 + Cx + D. This left a system of 4 equations with 3 unknowns. After converting to matrix form (where A contained the coefficients for each x term, x contained the B, C, and D coefficients, and b contained the y values), I was able to calculate A^T * A and A^T * b to give me the coefficients and constants for the corresponding augmented matrix. Solving this matrix (using a calculator as the calculations were complex and time-consuming to do by hand), I was able to solve for B, C, and D to create an analytically-derived parabolic equation.</p>
+      
+      <!-- Embed PDF 4 -->
+      <iframe class="pdf-iframe" src="Assignment 1-part-3.pdf">
+          This browser does not support inline PDFs. Please download the PDF to view it: 
+          <a href="Assignment 1-part-3.pdf">Download PDF</a>.
+      </iframe>
+
+      <h2>Numerical Methods</h2>
+      <h3>Newton-Raphson Method</h3>
+      
+      <!-- Embed PDF 5 -->
+      <iframe class="pdf-iframe" src="Assignment 1-part-4.pdf">
+          This browser does not support inline PDFs. Please download the PDF to view it: 
+          <a href="Assignment 1-part-4.pdf">Download PDF</a>.
+      </iframe>
+
+    </div>
+  </div>
+
 </body>
 </html>
