@@ -1,5 +1,7 @@
+@import url('https://unpkg.com/ms-sans-serif/ms_sans_serif.css');
+
 /* ==========================================================================
-   GLOBAL RESET & BODY
+   GLOBAL RESET & PIXELATED FONT RENDERING
    ========================================================================== */
 * {
     box-sizing: border-box;
@@ -8,15 +10,20 @@
 body {
     background-color: #3f3461;
     color: white;
-    font-family: 'Consolas', monospace;
+    font-family: 'MS Sans Serif', Tahoma, sans-serif;
     text-align: left;
-    font-size: 16px;
+    font-size: 13px; /* Increased from 11px */
     margin: 0;
     padding: 0;
+
+    /* Force crisp pixelated rendering on MS Sans Serif web font */
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: unset;
+    font-smooth: never;
 }
 
 /* ==========================================================================
-   INDEX.HTML — DESKTOP ENVIRONMENT & TASKBAR
+   INDEX.HTML — DESKTOP ENVIRONMENT, TASKBAR & BONZI BUDDY
    ========================================================================== */
 .desktop-body {
     height: 100vh;
@@ -31,10 +38,11 @@ body {
 }
 
 .desktop-greeting h1 {
-    font-size: 36px;
+    font-size: 32px; /* Increased from 28px */
     margin: 0 0 20px 0;
     color: #ffffff;
     text-shadow: 2px 2px 0px #241b3a;
+    font-family: 'MS Sans Serif', Tahoma, sans-serif;
 }
 
 /* Desktop Icons */
@@ -91,10 +99,23 @@ body {
 }
 
 .icon-label {
-    font-size: 13px;
+    font-size: 12px; /* Increased from 11px */
     text-align: center;
     word-break: break-word;
     text-shadow: 1px 1px 0px #000000;
+    font-family: 'MS Sans Serif', Tahoma, sans-serif;
+}
+
+/* Bonzi Buddy Desktop Companion */
+.bonzi-buddy {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    width: 120px;
+    height: auto;
+    z-index: 100;
+    pointer-events: auto;
+    filter: drop-shadow(2px 2px 0px #241b3a);
 }
 
 /* Taskbar */
@@ -117,9 +138,9 @@ body {
 .start-btn {
     background-color: #c4b8e5;
     color: #000000;
-    font-family: 'Consolas', monospace;
+    font-family: 'MS Sans Serif', Tahoma, sans-serif;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 12px; /* Increased from 11px */
     padding: 3px 10px;
     display: flex;
     align-items: center;
@@ -148,8 +169,9 @@ body {
 .taskbar-item {
     background-color: #c4b8e5;
     padding: 4px 12px;
-    font-size: 13px;
+    font-size: 12px; /* Increased from 11px */
     font-weight: bold;
+    font-family: 'MS Sans Serif', Tahoma, sans-serif;
     border-top: 2px solid #3f3461;
     border-left: 2px solid #3f3461;
     border-right: 2px solid #ffffff;
@@ -164,8 +186,8 @@ body {
     border-right: 2px solid #ffffff;
     border-bottom: 2px solid #ffffff;
     padding: 3px 10px;
-    font-size: 12px;
-    font-weight: bold;
+    font-size: 12px; /* Increased from 11px */
+    font-family: 'MS Sans Serif', Tahoma, sans-serif;
 }
 
 /* ==========================================================================
@@ -194,7 +216,8 @@ body {
     align-items: center;
     padding: 4px 8px;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 13px; /* Increased from 11px */
+    font-family: 'MS Sans Serif', Tahoma, sans-serif;
 }
 
 .window-controls {
@@ -211,9 +234,9 @@ body {
     text-align: center;
     line-height: 16px;
     text-decoration: none;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: bold;
-    font-family: monospace;
+    font-family: 'MS Sans Serif', Tahoma, sans-serif;
 
     border-top: 2px solid #ffffff;
     border-left: 2px solid #ffffff;
@@ -241,7 +264,8 @@ body {
     padding: 6px 10px;
     background-color: #c4b8e5;
     border-bottom: 1px solid #6b5b95;
-    font-size: 13px;
+    font-size: 13px; /* Increased from 11px */
+    font-family: 'MS Sans Serif', Tahoma, sans-serif;
 }
 
 .address-box {
@@ -253,23 +277,28 @@ body {
     border-left: 2px solid #3f3461;
     border-right: 2px solid #ffffff;
     border-bottom: 2px solid #ffffff;
-    font-family: 'Consolas', monospace;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 13px; /* Increased from 12px */
 }
 
 .explorer-body {
-    padding: 20px 25px;
+    padding: 12px 16px;
     background-color: #c4b8e5;
+    font-family: 'MS Sans Serif', Tahoma, sans-serif;
 }
 
 .explorer-body h2 {
-    font-size: 20px;
+    font-size: 16px; /* Increased from 14px */
+    font-weight: bold;
     color: #3f3461;
     margin-top: 0;
+    margin-bottom: 8px;
+    font-family: 'MS Sans Serif', Tahoma, sans-serif;
 }
 
 .instruction {
-    font-size: 14px;
-    margin-bottom: 20px;
+    font-size: 13px; /* Increased from 11px */
+    margin-bottom: 16px;
 }
 
 .file-grid {
@@ -282,14 +311,22 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-decoration: underline;
-    color: #0000ff;
+    text-decoration: none;
+    color: #3f3461;
     padding: 8px;
     border: 1px transparent dotted;
 }
 
+.file-item:visited {
+    color: #3f3461;
+}
+
 .file-item:hover {
     background-color: #3f3461;
+    color: #ffffff;
+}
+
+.file-item:hover .file-name {
     color: #ffffff;
 }
 
@@ -314,27 +351,42 @@ body {
 }
 
 .file-name {
-    font-size: 13px;
+    font-size: 12px; /* Increased from 11px */
+    font-family: 'MS Sans Serif', Tahoma, sans-serif;
 }
 
 /* ==========================================================================
-   ASSN1.HTML — RETRO WINDOW BODY, NOTEPAD EDITOR & PDF IFRAME
+   ASSN1.HTML — WINDOW BODY, CODE EDITOR & PDF IFRAME
    ========================================================================== */
 .window-body {
-    padding: 25px 35px;
+    padding: 12px 16px;
     box-sizing: border-box;
+    font-family: 'MS Sans Serif', Tahoma, sans-serif;
 }
 
 .window-body h1 {
-    font-size: 24px;
+    font-size: 18px; /* Increased from 14px */
+    font-weight: bold;
     margin-top: 0;
+    margin-bottom: 10px;
     color: #3f3461;
+    font-family: 'MS Sans Serif', Tahoma, sans-serif;
 }
 
 .window-body h2 {
-    font-size: 18px;
+    font-size: 15px; /* Increased from 12px */
+    font-weight: bold;
     color: #3f3461;
-    margin-top: 25px;
+    margin-top: 14px;
+    margin-bottom: 8px;
+    font-family: 'MS Sans Serif', Tahoma, sans-serif;
+}
+
+.window-body p {
+    font-size: 13px; /* Increased from 11px */
+    line-height: 1.5;
+    margin-top: 0;
+    margin-bottom: 12px;
 }
 
 .code-editor {
@@ -351,13 +403,13 @@ body {
     background-color: #3f3461;
     color: #ffffff;
     padding: 4px 8px;
-    font-size: 12px;
+    font-size: 12px; /* Increased from 11px */
     font-weight: bold;
-    font-family: 'Consolas', monospace;
+    font-family: 'Consolas', 'Courier New', monospace;
 }
 
 .editor-content {
-    background-color: #282a36; /* Official Dracula background */
+    background-color: #282a36;
     border-top: 2px solid #3f3461;
     border-left: 2px solid #3f3461;
     border-right: 2px solid #ffffff;
@@ -368,9 +420,9 @@ body {
 
 .editor-content pre {
     margin: 0;
-    padding: 14px;
+    padding: 12px;
     font-family: 'Consolas', 'Courier New', monospace;
-    font-size: 13px;
+    font-size: 13px; /* Increased from 12px */
     line-height: 1.5;
     white-space: pre;
     word-break: normal;
@@ -403,7 +455,7 @@ body {
     width: 100%;
     height: 500px;
     border: none;
-    margin: 15px 0 25px 0;
+    margin: 12px 0 16px 0;
     background-color: #ffffff;
     border-top: 2px solid #6b5b95;
     border-left: 2px solid #6b5b95;
