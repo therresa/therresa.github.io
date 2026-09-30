@@ -473,6 +473,57 @@ body {
     box-sizing: border-box;
 }
 
+/* Python Code File Icon */
+.py-file-icon {
+    width: 34px;
+    height: 42px;
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    border-left: 4px solid #3572a5; /* Python Blue Accent */
+    margin-bottom: 6px;
+    padding: 8px 4px 4px 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: 2px 2px 0px #3f3461;
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* Retro Folded Corner */
+.py-file-icon::after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    border-width: 0 8px 8px 0;
+    border-style: solid;
+    border-color: #dcd6f7 #dcd6f7 #000000 #000000; /* Matched fold highlight */
+    display: block;
+    width: 0;
+}
+
+/* Horizontal Code Lines */
+.py-file-icon .code-line {
+    height: 2px;
+    background-color: #3f3461;
+    width: 100%;
+}
+
+.py-file-icon .code-line:nth-child(1) {
+    width: 55%; /* Keeps line clear of the folded top corner */
+}
+
+.py-file-icon .code-line:nth-child(2) {
+    width: 80%;
+    background-color: #ff79c6; /* Dracula Pink Syntax Accent */
+    margin-left: 3px;
+}
+
+.py-file-icon .code-line:nth-child(3) {
+    width: 90%;
+}
+
 /* ==========================================================================
    DRACULA SYNTAX TOKEN OVERRIDES
    ========================================================================== */
