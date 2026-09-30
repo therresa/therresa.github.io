@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Newton-Raphson method function
 def newton_raphson(f, df, d2f, tolerance=1e-7, iterations=100):
     x = 0
     hist = [x]
@@ -34,10 +33,11 @@ def set_up_functions(x0, y0, func_type):
     return y, root, history
 
 def plot_distances(points_list, func_type):
-    x_func = np.linspace(-10, 10, 1000)
-    y_curve = x_func**2 + 5 if func_type == 'parabola' else np.exp(x_func)
+    x_pts = np.linspace(-10, 10, 1000)
+    y_curve, root, history = set_up_functions(0, 0, func_type)
+    y_curve = y_curve(x_pts)
     plt.figure(figsize=(20, 5))
-    plt.plot(x_func, y_curve, 'b-', label=func_type)
+    plt.plot(x_pts, y_curve, 'b-', label=func_type)
 
     for i, (x_0, y_0) in enumerate(points_list):
         colour = plt.cm.tab10(i)
@@ -64,7 +64,7 @@ def plot_distances(points_list, func_type):
 
 def main():
     ### EXAMPLE 1: Distance from point to a parabolic function.
-    points = [(0,0), (-4,0), (-8,0), (2,0), (6,0), (4,6)]  # Point coordinates
+    points = [(0,0), (-4,0), (-8,0), (2,0), (6,0), (4,6)]
     function = 'parabola'
 
     plot_distances(points, function)

@@ -83,7 +83,6 @@
           <pre><code class="language-python">import numpy as np
 import matplotlib.pyplot as plt
 
-# Newton-Raphson method function
 def newton_raphson(f, df, d2f, tolerance=1e-7, iterations=100):
     x = 0
     hist = [x]
@@ -116,10 +115,11 @@ def set_up_functions(x0, y0, func_type):
     return y, root, history
 
 def plot_distances(points_list, func_type):
-    x_func = np.linspace(-10, 10, 1000)
-    y_curve = x_func**2 + 5 if func_type == 'parabola' else np.exp(x_func)
+    x_pts = np.linspace(-10, 10, 1000)
+    y_curve, root, history = set_up_functions(0, 0, func_type)
+    y_curve = y_curve(x_pts)
     plt.figure(figsize=(20, 5))
-    plt.plot(x_func, y_curve, 'b-', label=func_type)
+    plt.plot(x_pts, y_curve, 'b-', label=func_type)
 
     for i, (x_0, y_0) in enumerate(points_list):
         colour = plt.cm.tab10(i)
@@ -146,7 +146,7 @@ def plot_distances(points_list, func_type):
 
 def main():
     ### EXAMPLE 1: Distance from point to a parabolic function.
-    points = [(0,0), (-4,0), (-8,0), (2,0), (6,0), (4,6)]  # Point coordinates
+    points = [(0,0), (-4,0), (-8,0), (2,0), (6,0), (4,6)]
     function = 'parabola'
 
     plot_distances(points, function)
@@ -175,17 +175,12 @@ if __name__ == "__main__":
           <pre><code class="language-python">import numpy as np
 import matplotlib.pyplot as plt
 
-# Bisection method function
 def bisection(df, func_type, tolerance=1e-7, iterations=100):
-    x_1, x_2 = (-1, 1) if func_type == 'parabola' else (-10, 10)  # Initial interval
+    x_1, x_2 = (-10,10)
     hist = [(x_1, x_2)]
 
-    print(df(x_1), df(x_2))
-    if df(x_1) * df(x_2) > 0:
-        raise ValueError("df(x_1) and df(x_2) must have opposite signs.")
-
     for i in range(iterations):
-        x_3 = (x_1 + x_2) / 2  # Midpoint
+        x_3 = (x_1 + x_2) / 2
         f_3 = df(x_3)
 
         if f_3 > 0:
@@ -201,35 +196,36 @@ def bisection(df, func_type, tolerance=1e-7, iterations=100):
 
 def set_up_functions(x0, y0, func_type):
     if func_type == 'parabola':
-        y = lambda x: x**2 + 5  # Parabolic function
-        df = lambda x: 2*(x-x0) + 2*((x**2 + 5) - y0)*(2*x)  # First derivative of function
+        y = lambda x: x**2 + 5
+        df = lambda x: 2*(x-x0) + 2*((x**2 + 5) - y0)*(2*x)
 
     elif func_type == 'exponential':
-        y = lambda x: np.exp(x)  # Exponential function
-        df = lambda x: 2*(x-x0) + 2*(np.exp(x) - y0)*np.exp(x)  # First derivative of function
+        y = lambda x: np.exp(x)
+        df = lambda x: 2*(x-x0) + 2*(np.exp(x) - y0)*np.exp(x)
 
-    root, history = bisection(df, func_type)  # Call Bisection method
+    root, history = bisection(df, func_type)
     return y, root, history
 
-def plot_distances(points_list, func_type, history):
-    x_func = np.linspace(-10, 10, 1000)
-    y_curve = x_func**2 + 5 if func_type == 'parabola' else np.exp(x_func)
+def plot_distances(points_list, func_type):
+    x_pts = np.linspace(-10, 10, 1000)
+    y_curve, root, history = set_up_functions(0, 0, func_type)
+    y_curve = y_curve(x_pts)
     plt.figure(figsize=(20, 5))
-    plt.plot(x_func, y_curve, 'b-', label=func_type)
+    plt.plot(x_pts, y_curve, 'b-', label=func_type)
 
     for i, (x_0, y_0) in enumerate(points_list):
         colour = plt.cm.tab10(i)
         y, root, history = set_up_functions(x_0, y_0, func_type)
         distance = np.sqrt((root - x_0)**2 + (y(root) - y_0)**2)
 
-        plt.plot([x_0, root], [y_0, y(root)], '-', color=colour)  # Line from point to function
+        plt.plot([x_0, root], [y_0, y(root)], '-', color=colour) 
         plt.plot(x_0, y_0, 'o', color=colour)
         for k, (left, right) in enumerate(history):
-            alpha = (k + 1) / len(history)  # older intervals are more transparent
+            alpha = (k + 1) / len(history)  # older intervals have less alpha
             plt.plot([left, right], [y(left), y(right)], '-', color=colour,
-                     alpha=alpha, linewidth=1 + 2 * alpha, zorder=2 + k)          # chord joining the pair
-            plt.plot(left, y(left), '>', color=colour, alpha=alpha, markersize=8, zorder=2 + k)   # left end
-            plt.plot(right, y(right), '<', color=colour, alpha=alpha, markersize=8, zorder=2 + k) # right end
+                     alpha=alpha, linewidth=1 + 2 * alpha, zorder=2 + k)
+            plt.plot(left, y(left), '>', color=colour, alpha=alpha, markersize=8, zorder=2 + k)
+            plt.plot(right, y(right), '<', color=colour, alpha=alpha, markersize=8, zorder=2 + k)
 
         plt.text(x_0, y_0, f'({x_0}, {y_0})', fontsize=9, ha='left')
         plt.text(root, y(root), f'{distance:.2f}', fontsize=9, ha='right', clip_on=True)
@@ -245,29 +241,15 @@ def plot_distances(points_list, func_type, history):
 
 def main():
     ### EXAMPLE 1: Distance from point to a parabolic function.
-    points = [(0,0), (-4,0), (-8,0), (2,0), (6,0)]  # Point coordinates
+    points = [(0,0), (-4,0), (-8,0), (2,0), (6,0), (4,6)]
     function = 'parabola'
-    for x0, y0 in points:
-        y, root, history = set_up_functions(x0, y0, function)
-        distance = np.sqrt((root - x0)**2 + (y(root) - y0)**2)
-        
-        print(f"Estimated root ({function} to point equation): {root}")
-        print(f"Estimated distance from point ({x0}, {y0}) to {function}: {distance}")
 
-    plot_distances(points, function, history)
+    plot_distances(points, function)
 
     ### EXAMPLE 2: Distance from point to an exponential function.
-    function = 'exponential'  # Function type
-    for x0, y0 in points:
-        y, root, history = set_up_functions(x0, y0, function)
+    function = 'exponential'
 
-        distance = np.sqrt((root - x0)**2 + (y(root) - y0)**2)
-
-        print(f"Estimated root ({function} to point equation) after 10 iterations: {root}")
-        print(f"Estimated distance from point ({x0}, {y0}) to {function}: {distance}")
-
-    plot_distances(points, function, history)
-
+    plot_distances(points, function)
 if __name__ == "__main__":
     main()</code></pre>
         </div>

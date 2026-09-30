@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Bisection method function
 def bisection(df, func_type, tolerance=1e-7, iterations=100):
     x_1, x_2 = (-10,10)
     hist = [(x_1, x_2)]
@@ -23,31 +22,32 @@ def bisection(df, func_type, tolerance=1e-7, iterations=100):
 
 def set_up_functions(x0, y0, func_type):
     if func_type == 'parabola':
-        y = lambda x: x**2 + 5  # Parabolic function
+        y = lambda x: x**2 + 5
         df = lambda x: 2*(x-x0) + 2*((x**2 + 5) - y0)*(2*x)
 
     elif func_type == 'exponential':
-        y = lambda x: np.exp(x)  # Exponential function
+        y = lambda x: np.exp(x)
         df = lambda x: 2*(x-x0) + 2*(np.exp(x) - y0)*np.exp(x)
 
     root, history = bisection(df, func_type)
     return y, root, history
 
 def plot_distances(points_list, func_type):
-    x_func = np.linspace(-10, 10, 1000)
-    y_curve = x_func**2 + 5 if func_type == 'parabola' else np.exp(x_func)
+    x_pts = np.linspace(-10, 10, 1000)
+    y_curve, root, history = set_up_functions(0, 0, func_type)
+    y_curve = y_curve(x_pts)
     plt.figure(figsize=(20, 5))
-    plt.plot(x_func, y_curve, 'b-', label=func_type)
+    plt.plot(x_pts, y_curve, 'b-', label=func_type)
 
     for i, (x_0, y_0) in enumerate(points_list):
         colour = plt.cm.tab10(i)
         y, root, history = set_up_functions(x_0, y_0, func_type)
         distance = np.sqrt((root - x_0)**2 + (y(root) - y_0)**2)
 
-        plt.plot([x_0, root], [y_0, y(root)], '-', color=colour)  # Line from point to function
+        plt.plot([x_0, root], [y_0, y(root)], '-', color=colour) 
         plt.plot(x_0, y_0, 'o', color=colour)
         for k, (left, right) in enumerate(history):
-            alpha = (k + 1) / len(history)  # older intervals are more transparent
+            alpha = (k + 1) / len(history)  # older intervals have less alpha
             plt.plot([left, right], [y(left), y(right)], '-', color=colour,
                      alpha=alpha, linewidth=1 + 2 * alpha, zorder=2 + k)
             plt.plot(left, y(left), '>', color=colour, alpha=alpha, markersize=8, zorder=2 + k)
